@@ -1,0 +1,149 @@
+﻿<html>
+<head>
+
+<style>
+	#calendar{
+		font-size:35px;
+		margin-left:34%;
+		margin-top:100px;
+		border:solid black 3px;
+		background-color:#f0ffff;
+		text-align:center;}
+	#calendar a{
+		text-decoration:none;
+		color:inherit;}
+	#calendar .bord{
+		font-size:45px;}
+	#calendar .vihbord{
+		color:red;
+		font-size:45px;}
+	#calendar .budni{
+		opacity:1;
+		color:black;}
+	#calendar .vih{
+		color:red;}
+	#calendar .drm{
+		opacity:0.3;}
+	#calendar .today{
+		border:solid red 2px;}
+	#calendar .todayvih{
+		border:solid red 2px;
+		color:red;}
+	#calendar .hov{
+		font-size:45px;}
+	#calendar .hov:hover{
+		cursor:pointer;
+		opacity:0.8;}
+
+</style>
+		
+<script>
+	function print_table(date){
+		document.write('<table  cellpadding="3" cellspacing="2" id="calendar">');
+		var s='<tr>';
+		s+='<td><span onClick="print_left(date)" class="hov">&#8656</span></td>';
+		s+='<td class="bord" colspan="5"></td>';
+		s+='<td><span onClick="print_right(date)" class="hov">&#8658</span></td>';
+		s+='</tr>	<tr>';
+		document.write(s);
+		for (var i=0; i<7; i++){
+			if (i<5){
+				document.write('<td class="bord"></td>');
+			}
+			else document.write('<td class="vihbord"></td>');
+		}
+		document.write('</tr>');
+		for (var i=1;i<=6;i++){
+			document.write('<tr>');
+			for (var j=1;j<=7;j++){		
+						if (j<=5){
+							document.write('<td></td>');
+						}
+						else document.write('<td class="vih"></td>');
+			}
+			document.write('</tr>');
+		}
+		document.write('</table>');
+	}
+	
+	function print_calendar(date){
+		var year=date.getFullYear();
+		var m='Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь';
+		var d='Пн Вт Ср Чт Пт Сб Вс'
+		var month=m.split(' ');
+		var day=d.split(' ');
+		
+		var now=new Date();
+		var datem=new Date();
+		datem.setDate(date.getDate());
+		
+		document.body.children[1].children[0].children[0].children[1].innerHTML=year+', '+month[date.getMonth()];
+		for (var i=0; i<=6; i++){
+			document.body.children[1].children[0].children[1].children[i].innerHTML=day[i];
+		}
+		date.setDate(1);
+		var k=date.getDay();
+		if (k==0) {
+			k=7;
+		}
+		if (k==1) {
+			k=8;
+		}
+		date.setDate(date.getDate()-k);
+		
+		for (var i=2; i<=7; i++){
+			for (var j=0; j<=6; j++){
+				date.setDate(date.getDate()+1);
+				if (date.getMonth()==datem.getMonth()){
+					if ((date.getDay()>0)&&(date.getDay()<=5)){
+						if (date==now) {
+							document.body.children[1].children[0].children[i].children[j].className="today";
+							document.body.children[1].children[0].children[i].children[j].innerHTML=date.getDate();
+						}
+						else {
+							document.body.children[1].children[0].children[i].children[j].className="budni";
+							document.body.children[1].children[0].children[i].children[j].innerHTML=date.getDate();
+						}
+					}
+					else {
+						if (date==now) {
+							document.body.children[1].children[0].children[i].children[j].className="todayvih";
+							document.body.children[1].children[0].children[i].children[j].innerHTML=date.getDate();
+						}
+						else {
+							document.body.children[1].children[0].children[i].children[j].className="vih";
+							document.body.children[1].children[0].children[i].children[j].innerHTML=date.getDate();
+						}
+					}
+				}
+				else {
+					document.body.children[1].children[0].children[i].children[j].className="drm";
+					document.body.children[1].children[0].children[i].children[j].innerHTML=date.getDate();
+				}
+			}
+		}
+		date=now;
+	}
+	
+	function print_left(date){
+		date.setMonth(date.getMonth()-2);
+		print_calendar(date);
+	}
+	
+	function print_right(date){
+		date.setMonth(date.getMonth());
+		print_calendar(date);
+	}
+</script>
+</head>
+<body>
+	<script>
+	
+		var date=new Date();
+		print_table(date);
+		print_calendar(date);
+		
+		
+	</script>
+</body>
+</html>

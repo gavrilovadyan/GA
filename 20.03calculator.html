@@ -1,0 +1,44 @@
+<html>
+<head>
+<style>
+
+	.f1{
+		width:140px;}
+
+</style>
+<script>
+	function plus(){
+		x=+document.calc.val1.value.replace(',','.');
+		y=+document.calc.val2.value.replace(',','.');
+		result=x+y;
+		document.getElementById("res").innerHTML=result;
+	}
+	
+	function multiply(){
+		document.getElementById("res").innerHTML=document.calc.val1.value.replace(',','.')*document.calc.val2.value.replace(',','.');
+	}
+	
+	function minus(){
+		document.getElementById("res").innerHTML=document.calc.val1.value.replace(',','.') - document.calc.val2.value.replace(',','.');
+	}
+	
+	function divide(){
+		document.getElementById("res").innerHTML=document.calc.val1.value.replace(',','.') / document.calc.val2.value.replace(',','.');
+	}
+</script>
+</head>
+<body>
+	<form name="calc" class="f1">
+		<input type="text" name="val1" id="val1">
+		<input type="button" onClick="plus()" value="+" class="btn">
+		<input type="button" onClick="multiply()" value="*" class="btn">
+		<input type="button" onClick="minus()" value="-" class="btn">
+		<input type="button" onClick="divide()" value="/" class="btn">
+		<input type="text" name="val2" id="val2">
+		<br>
+		<label>=<label>
+		<br>
+		<label name="res" id="res"></label>
+	</form>
+</body>
+</html>
